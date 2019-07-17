@@ -1,4 +1,8 @@
-public class PremiumContainer extends Container{
+package bg.fmi.mjt.lab.coffee_machine.container;
+
+import bg.fmi.mjt.lab.coffee_machine.supplies.Beverage;
+
+public class PremiumContainer extends Container {
     private  final double maxCoffee = 1000;
     private  final double maxWater = 1000;
     private final double maxMilk = 1000;
@@ -26,7 +30,7 @@ public class PremiumContainer extends Container{
     }
 
     @Override
-    public double getCurrentChocolate() {
+    public double getCurrentCacao() {
         return currentChocolate;
     }
 
@@ -46,11 +50,11 @@ public class PremiumContainer extends Container{
         return currentCoffee;
     }
 
-    void updateSupplies(Beverage beverage) {
+    public void updateSupplies(Beverage beverage) {
         this.setCurrentCoffee(this.getCurrentCoffee() - beverage.getCoffee());
         this.setCurrentWater(this.getCurrentWater() - beverage.getWater());
         this.setCurrentMilk(this.getCurrentMilk() - beverage.getMilk());
-        this.setCurrentChocolate(this.getCurrentChocolate() - beverage.getChocolate());
+        this.setCurrentChocolate(this.getCurrentCacao() - beverage.getCacao());
     }
 
     public double getMaxMilk() {
