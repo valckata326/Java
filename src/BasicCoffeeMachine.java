@@ -6,9 +6,13 @@ public class BasicCoffeeMachine implements CoffeeMachine {
     }
     public Product brew(Beverage beverage)
     {
-        if(!(beverage instanceof Espresso || definite_container.getCurrentWater()))
+        if(!(beverage instanceof Espresso || definite_container.getCurrentWater() < 10))
         {
             return null;
+        }
+        else
+        {
+
         }
     }
 
