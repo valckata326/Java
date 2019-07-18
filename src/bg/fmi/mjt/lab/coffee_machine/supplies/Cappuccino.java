@@ -1,3 +1,7 @@
+package bg.fmi.mjt.lab.coffee_machine.supplies;
+
+import bg.fmi.mjt.lab.coffee_machine.supplies.Beverage;
+
 public class Cappuccino implements Beverage {
     private static final double coffee = 18;
     private static final double milk = 150;
@@ -16,7 +20,7 @@ public class Cappuccino implements Beverage {
     }
 
     @Override
-    public double getChocolate() {
+    public double getCacao() {
         return 0;
     }
 

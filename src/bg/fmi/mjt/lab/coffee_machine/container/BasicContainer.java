@@ -1,4 +1,9 @@
-public class BasicContainer extends Container{
+package bg.fmi.mjt.lab.coffee_machine.container;
+
+import bg.fmi.mjt.lab.coffee_machine.container.Container;
+import bg.fmi.mjt.lab.coffee_machine.supplies.Beverage;
+
+public class BasicContainer extends Container {
 
 
     private  final double max_coffee = 600;
@@ -20,7 +25,7 @@ public class BasicContainer extends Container{
     }
 
     @Override
-    public double getCurrentChocolate() {
+    public double getCurrentCacao() {
         return 0;
     }
 
@@ -39,7 +44,7 @@ public class BasicContainer extends Container{
         return currentWater;
     }
 
-    void updateSupplies(Beverage beverage)
+    public void updateSupplies(Beverage beverage)
     {
         setCurrentCoffee(currentCoffee-beverage.getCoffee());
         setCurrentWater(currentWater-beverage.getWater());

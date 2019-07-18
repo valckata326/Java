@@ -1,4 +1,8 @@
-public class Mochaccino implements Beverage{
+package bg.fmi.mjt.lab.coffee_machine.supplies;
+
+import bg.fmi.mjt.lab.coffee_machine.supplies.Beverage;
+
+public class Mochaccino implements Beverage {
     private static final double coffee = 18;
     private static final double milk = 150;
     private static final double chocolate = 10;
@@ -10,7 +14,7 @@ public class Mochaccino implements Beverage{
     }
 
     @Override
-    public double getChocolate() {
+    public double getCacao() {
         return chocolate;
     }
 
