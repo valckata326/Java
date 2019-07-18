@@ -7,10 +7,6 @@ public class Cappuccino implements Beverage {
     private static final double milk = 150;
     private static final String name = "Cappuccino";
 
-    public Cappuccino()
-    {
-
-    }
     @Override
     public double getCoffee()
     {

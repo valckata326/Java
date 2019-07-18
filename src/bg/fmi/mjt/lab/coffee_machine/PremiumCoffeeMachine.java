@@ -8,7 +8,7 @@ import bg.fmi.mjt.lab.coffee_machine.supplies.Espresso;
 import bg.fmi.mjt.lab.coffee_machine.supplies.Mochaccino;
 
 public class PremiumCoffeeMachine implements CoffeeMachine {
-    private PremiumContainer definite_container;
+    private PremiumContainer definiteContainer;
     private String[] lucks = {"If at first you don't succeed call it version 1.0.",
             "Today you will make magic happen!",
             "Have you tried turning it off and on again?",
@@ -18,27 +18,24 @@ public class PremiumCoffeeMachine implements CoffeeMachine {
     public PremiumCoffeeMachine()
     {
         toRefill = false;
-        definite_container = new PremiumContainer();
+        definiteContainer = new PremiumContainer();
         indexOfLuck = 0;
     }
     public PremiumCoffeeMachine(boolean newToRefill)
     {
         toRefill = newToRefill;
-        definite_container = new PremiumContainer();
+        definiteContainer = new PremiumContainer();
         indexOfLuck = 0;
 
     }
     public Product brew(Beverage beverage)
     {
-        if(beverage instanceof Espresso || beverage instanceof Mochaccino || beverage instanceof Cappuccino)
+        if(isBeverageAvailable(beverage))
         {
             //enough ingredients;
-            if(beverage.getWater() <= definite_container.getCurrentWater()
-                    && beverage.getCoffee() <= definite_container.getCurrentCoffee()
-                    && beverage.getMilk() <= definite_container.getCurrentMilk()
-                    && beverage.getCacao() <=definite_container.getCurrentCacao())
+            if(isSuppliesAvailable(beverage))
             {
-                definite_container.updateSupplies(beverage);
+                definiteContainer.updateSupplies(beverage);
                 if(indexOfLuck > 3)
                 {
                     indexOfLuck = 0;
@@ -47,8 +44,8 @@ public class PremiumCoffeeMachine implements CoffeeMachine {
             }
             else if(toRefill) // not enough ingredients but refill available
             {
-                definite_container.refill();
-                definite_container.updateSupplies(beverage);
+                definiteContainer.refill();
+                definiteContainer.updateSupplies(beverage);
                 if(indexOfLuck > 3)
                 {
                     indexOfLuck = 0;
@@ -74,21 +71,18 @@ public class PremiumCoffeeMachine implements CoffeeMachine {
         }
         else
         {
-            if(beverage instanceof Espresso || beverage instanceof Mochaccino || beverage instanceof Cappuccino)
+            if(isBeverageAvailable(beverage))
             {
                 for(int i = 1; i <= quantity;i++)
                 {
-                    if(beverage.getWater() <= definite_container.getCurrentWater()
-                            && beverage.getCoffee() <= definite_container.getCurrentCoffee()
-                            && beverage.getMilk() <= definite_container.getCurrentMilk()
-                            && beverage.getCacao() <=definite_container.getCurrentCacao())
+                    if(isSuppliesAvailable(beverage))
                     {
-                        definite_container.updateSupplies(beverage);
+                        definiteContainer.updateSupplies(beverage);
                     }
                     else if(toRefill)
                     {
-                        definite_container.refill();
-                        definite_container.updateSupplies(beverage);
+                        definiteContainer.refill();
+                        definiteContainer.updateSupplies(beverage);
                     }
                     else
                     {
@@ -106,10 +100,21 @@ public class PremiumCoffeeMachine implements CoffeeMachine {
 
     }
     public Container getSupplies() {
-        return definite_container;
+        return definiteContainer;
     }
     public void refill()
     {
-        definite_container.refill();
+        definiteContainer.refill();
+    }
+    boolean isBeverageAvailable(Beverage beverage)
+    {
+        return beverage instanceof Espresso || beverage instanceof Mochaccino || beverage instanceof Cappuccino;
+    }
+    boolean isSuppliesAvailable(Beverage beverage)
+    {
+        return beverage.getWater() <= definiteContainer.getCurrentWater()
+                && beverage.getCoffee() <= definiteContainer.getCurrentCoffee()
+                && beverage.getMilk() <= definiteContainer.getCurrentMilk()
+                && beverage.getCacao() <= definiteContainer.getCurrentCacao();
     }
 }

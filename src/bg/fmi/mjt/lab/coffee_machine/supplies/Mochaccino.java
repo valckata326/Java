@@ -8,10 +8,6 @@ public class Mochaccino implements Beverage {
     private static final double chocolate = 10;
     private static final String name = "Mochaccino";
 
-    public Mochaccino()
-    {
-
-    }
     @Override
     public double getWater() {
         return 0;

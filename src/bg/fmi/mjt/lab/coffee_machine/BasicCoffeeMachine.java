@@ -6,30 +6,32 @@ import bg.fmi.mjt.lab.coffee_machine.supplies.Beverage;
 import bg.fmi.mjt.lab.coffee_machine.supplies.Espresso;
 
 public class BasicCoffeeMachine implements CoffeeMachine {
-    private BasicContainer definite_container;
+    private BasicContainer definiteContainer    ;
     public BasicCoffeeMachine()
     {
-        definite_container = new BasicContainer();
+        definiteContainer = new BasicContainer();
     }
     public Product brew(Beverage beverage)
     {
-        if(!(beverage instanceof Espresso && definite_container.getCurrentWater() >= 30 && definite_container.getCurrentCoffee() >= 10))
+        if(!(beverage instanceof Espresso
+                && definiteContainer.getCurrentWater() >= beverage.getWater()
+                && definiteContainer.getCurrentCoffee() >= beverage.getCoffee()))
         {
             return null;
         }
         else
         {
-            definite_container.updateSupplies(beverage);
+            definiteContainer.updateSupplies(beverage);
             return new Product(beverage.getName(),1, null);
         }
     }
     public Container getSupplies()
     {
-        return definite_container;
+        return definiteContainer;
     }
     public void refill()
     {
-        definite_container.refill();
+        definiteContainer.refill();
     }
 
 }
