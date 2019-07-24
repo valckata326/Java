@@ -4,16 +4,16 @@ import bg.sofia.uni.fmi.jira.enums.IssuePriority;
 import bg.sofia.uni.fmi.jira.enums.IssueResolution;
 import bg.sofia.uni.fmi.jira.enums.IssueStatus;
 import bg.sofia.uni.fmi.jira.enums.IssueType;
+import bg.sofia.uni.fmi.jira.interfaces.FilterIssues;
 import bg.sofia.uni.fmi.jira.interfaces.IssueTracker;
 import bg.sofia.uni.fmi.jira.issues.Issue;
-import jdk.jshell.spi.ExecutionControl;
+
 
 import java.time.LocalDateTime;
 
 public class Jira implements IssueTracker {
 
     private Issue[] issues;
-    //private int size;
 
     public Jira(Issue[] issues)
     {
@@ -22,94 +22,48 @@ public class Jira implements IssueTracker {
     @Override
     public Issue[] findAll(Component component, IssueStatus status)
     {
-        Issue[] statusIssues = new Issue[issues.length];
-        int counter = 0;
-        for(int index = 0; index < issues.length;index++)
-        {
-            Issue temporary = issues[index];
-            if(temporary != null && issues[index].getComponent().getName().equals(component.getName()) && issues[index].getStatus() == status)
-            {
-                statusIssues[counter++] = temporary;
-            }
-        }
-        return statusIssues;
+        return this.filterIssuesBy((int index)->issues[index].getComponent().getName().equals(component.getName()) && issues[index].getStatus() == status);
     }
     @Override
     public Issue[] findAll(Component component, IssuePriority priority)
     {
-        Issue[] priorityIssues = new Issue[issues.length];
-        int counter = 0;
-        for(int index = 0; index < issues.length;index++)
-        {
-            Issue temporary = issues[index];
-            if(temporary != null && issues[index].getComponent().getName().equals(component.getName()) && issues[index].getPriority() == priority)
-            {
-                priorityIssues[counter++] = temporary;
-            }
-        }
-        return priorityIssues;
+        return this.filterIssuesBy((int index)->issues[index].getComponent().getName().equals(component.getName()) && issues[index].getPriority() == priority);
     }
     @Override
     public Issue[] findAll(Component component, IssueType type)
     {
-        Issue[] typeIssues = new Issue[issues.length];
-        int counter = 0;
-        for(int index = 0; index < issues.length;index++)
-        {
-            Issue temporary = issues[index];
-            if(temporary != null && issues[index].getComponent().getName().equals(component.getName())  && issues[index].getType() == type)
-            {
-                typeIssues[counter++] = temporary;
-            }
-        }
-        return typeIssues;
+        return this.filterIssuesBy((int index)->issues[index].getComponent().getName().equals(component.getName())  && issues[index].getType() == type);
     }
     @Override
     public Issue[] findAll(Component component, IssueResolution resolution)
     {
-        Issue[] resolutionIssues = new Issue[issues.length];
-        int counter = 0;
-        for(int index = 0; index < issues.length;index++)
-        {
-            Issue temporary = issues[index];
-            if(temporary != null && issues[index].getComponent().getName().equals(component.getName()) && issues[index].getResolution() == resolution)
-            {
-                resolutionIssues[counter++] = temporary;
-            }
-        }
-        return resolutionIssues;
+        return this.filterIssuesBy((int index)->issues[index].getComponent().getName().equals(component.getName()) && issues[index].getResolution() == resolution);
     }
     @Override
     public Issue[] findAllIssuesCreatedBetween(LocalDateTime startTime, LocalDateTime endTime)
     {
-        Issue[] createdBetween = new Issue[issues.length];
-        int counter = 0;
-        for(int index = 0; index < issues.length; index++)
-        {
-            Issue temporary = issues[index];
-            if(temporary != null && issues[index].getCreated().compareTo(startTime) >= 0
-            && issues[index].getCreated().compareTo(endTime) <= 0)
-            {
-                createdBetween[counter++] = temporary;
-            }
-        }
-        return createdBetween;
+        return this.filterIssuesBy((int index)->issues[index].getCreated().compareTo(startTime) >= 0
+                && issues[index].getCreated().compareTo(endTime) <= 0);
     }
     @Override
     public Issue[] findAllBefore(LocalDateTime dueTime)
     {
-        Issue[] createdBefore = new Issue[issues.length];
+        return this.filterIssuesBy((int index)->(issues[index].getType() == IssueType.NEW_FEATURE || issues[index].getType() == IssueType.TASK)
+                && issues[index].getCreated().isBefore(dueTime));
+    }
+
+    private Issue[] filterIssuesBy(FilterIssues filterCondition)
+    {
+        Issue[] filteredIssues = new Issue[issues.length];
         int counter = 0;
-        for(int index = 0; index < issues.length; index++)
+        for(int i = 0; i < issues.length;i++)
         {
-            Issue temporary = issues[index];
-            if(temporary != null && (issues[index].getType() == IssueType.NEW_FEATURE || issues[index].getType() == IssueType.TASK)
-            && issues[index].getCreated().isBefore(dueTime))
+            Issue temporary = issues[i];
+            if(temporary != null && filterCondition.filterCondition(i))
             {
-                createdBefore[counter++] = temporary;
+                filteredIssues[counter++] = temporary;
             }
         }
-        return createdBefore;
-
+        return filteredIssues;
     }
 }

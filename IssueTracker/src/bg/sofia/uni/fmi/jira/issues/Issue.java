@@ -43,14 +43,11 @@ public abstract class Issue implements IIssues {
         this.setComponent(component);
         this.setDescription(description);
         this.setReporter(reporter);
-        setCreated(LocalDateTime.now());
-
 
         this.uniqueID = component.getShortName() + " - " + IdGenerator.generate();
         setStatus(IssueStatus.OPEN);
         resolve(IssueResolution.UNRESOLVED);
         setCreated(LocalDateTime.now());
-
     }
 
     private void validateUser(User user) throws InvalidReporterException
@@ -99,7 +96,6 @@ public abstract class Issue implements IIssues {
     public String getId()
     {
         return uniqueID;
-
     }
 
     @Override
