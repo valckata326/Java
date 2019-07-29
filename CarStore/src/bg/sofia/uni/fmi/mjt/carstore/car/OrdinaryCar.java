@@ -12,6 +12,7 @@ public class OrdinaryCar extends Car {
         super(model, year, price, type, region);
         setCarType();
     }
+    @Override
     protected void setCarType()
     {
         this.carType = CarType.OrdinaryCar;

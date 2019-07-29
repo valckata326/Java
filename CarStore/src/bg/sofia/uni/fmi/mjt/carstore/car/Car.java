@@ -62,9 +62,8 @@ public abstract class Car {
         this.type = type;
     }
 
-    private void setRegistrationNumber() {
-
-
+    private void setRegistrationNumber()
+    {
         String regPrefix = getRegion().getPrefix();
         String regNumber = getRegion().getRegistrationNumber();
 
@@ -89,6 +88,4 @@ public abstract class Car {
         return carType;
     }
     abstract void setCarType();
-
-
 }

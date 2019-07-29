@@ -32,10 +32,7 @@ public class CarStore{
             globalCounter.put(car.getRegion(),newCount);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     public boolean addAll(Collection<Car> cars)
     {
@@ -57,12 +54,7 @@ public class CarStore{
             totalPriceForCars -= car.getPrice();
             return true;
         }
-        else
-        {
-            return carStore.remove(car);
-        }
-
-
+        return carStore.remove(car);
     }
     public Collection<Car> getCarsByModel(Model model)
     {
@@ -78,13 +70,11 @@ public class CarStore{
     }
     public Car getCarByRegistrationNumber(String registrationNumber) throws CarNotFoundException
     {
-        Car toReturn;
         for(Car car : carStore)
         {
             if(car.getRegistrationNumber().equals(registrationNumber))
             {
-                toReturn = car;
-                return toReturn;
+                return car;
             }
         }
         throw new CarNotFoundException("Registration number not found!");
@@ -106,10 +96,7 @@ public class CarStore{
         {
             return reversed;
         }
-        else
-        {
-            return getCars(car);
-        }
+        return getCars(car);
 
     }
     public int getNumberOfCars()

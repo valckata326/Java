@@ -10,7 +10,9 @@ public class SportsCar extends Car {
     public SportsCar(Model model, int year, int price, EngineType type, Region region)
     {
         super(model, year, price, type, region);
+        setCarType();
     }
+    @Override
     protected void setCarType()
     {
         this.carType = CarType.SportsCar;
