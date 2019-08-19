@@ -51,8 +51,7 @@ public class StyleChecker {
         try {
             BufferedReader read = new BufferedReader(new InputStreamReader(source));
             PrintWriter writer = new PrintWriter(output);
-            String singleLine;
-            singleLine = read.readLine();
+            String singleLine = read.readLine();
             while (singleLine != null) {
                 if (singleLine.trim().equals("")) {
                     writer.println(singleLine);
@@ -77,7 +76,7 @@ public class StyleChecker {
         }
         catch (IOException exception)
         {
-            throw new RuntimeException("Cannot read from that file ", exception);
+            throw new RuntimeException("Cannot read from source stream", exception);
         }
     }
     public void DefaultProperties()
