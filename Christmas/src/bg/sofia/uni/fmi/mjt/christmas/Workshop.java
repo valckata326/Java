@@ -36,7 +36,7 @@ public class Workshop {
     public synchronized void postWish(Gift gift){
         getGifts().add(gift);
         wishCounter++;
-        this.notifyAll(); // някой елф да почне конструирането на този подарък
+        this.notify(); // някой елф да почне конструирането на този подарък
     }
     public synchronized Gift nextGift() {
         while (!isChristmasYet() && getGifts().isEmpty()) {
@@ -46,7 +46,7 @@ public class Workshop {
                 e.printStackTrace();
             }
         }
-        return  (isChristmasYet() && getGifts().isEmpty()) ? null : getGifts().poll();
+        return  (isChristmasYet() || getGifts().isEmpty()) ? null : getGifts().poll();
     }
     public Elf[] getElves(){
         return this.elves;

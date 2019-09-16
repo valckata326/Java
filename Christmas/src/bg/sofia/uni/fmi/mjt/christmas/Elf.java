@@ -8,7 +8,6 @@ public class Elf extends Thread {
         try{
             this.elfId = id;
             this.workshop = workshop;
-            totalGiftsCrafted = 0;
         }
         catch(IllegalArgumentException e){
             throw new UnsupportedOperationException(e);
@@ -17,12 +16,10 @@ public class Elf extends Thread {
 
     public synchronized void craftGift(){
         Gift gift;
-        while((!workshop.isChristmasYet() &&
-                workshop.nextGift() != null)
-                || workshop.getFinalGiftCount() != workshop.getWishCounter()) {
+        while((gift = workshop.nextGift()) != null) {
 
-            gift = workshop.nextGift();
-            workshop.getGifts().remove(workshop.getGifts().peek());
+            //gift = workshop.nextGift();
+            //workshop.getGifts().remove(workshop.getGifts().peek());
             try{
                 Thread.sleep(gift.getCraftTime());
             }
@@ -32,7 +29,7 @@ public class Elf extends Thread {
             totalGiftsCrafted++;
             workshop.addToStorage(gift);
         }
-        System.out.println("Elf: " + elfId + " created " + this.getTotalGiftsCrafted() + " gifts!");
+        //System.out.println("Elf: " + elfId + " created " + this.getTotalGiftsCrafted() + " gifts!");
     }
 
     public int getTotalGiftsCrafted()

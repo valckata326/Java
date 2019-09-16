@@ -4,11 +4,11 @@ import java.util.Random;
 public class Kid extends Thread{
     private final int MAX_THINKING_TIME = 30;
 
-    private Workshop workshopToReceive;
+    private Workshop workshop;
     private Gift wishedGift;
     public Kid(Workshop workshop){
         try{
-            workshopToReceive = workshop;
+            this.workshop = workshop;
         }
         catch(IllegalArgumentException e){
             throw new UnsupportedOperationException(e);
@@ -17,7 +17,7 @@ public class Kid extends Thread{
 
     public void makeWish(){
         wishedGift = Gift.getGift();
-        workshopToReceive.postWish(wishedGift);
+        workshop.postWish(wishedGift);
     }
     @Override
     public void run()
@@ -30,7 +30,7 @@ public class Kid extends Thread{
         catch(InterruptedException e){
             e.printStackTrace();
         }
-        if(!workshopToReceive.isChristmasYet())
+        if(!workshop.isChristmasYet())
         {
             makeWish();
             //System.out.println("Kid made his wish!");

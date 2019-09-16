@@ -18,17 +18,7 @@ public class Christmas {
         for(int i = 0; i < getNumberOfKids(); i++)
         {
             kids[i] = new Thread(new Kid(workshop));
-            kids[i].run();
-        }
-        for(int i = 0; i < getNumberOfKids(); i++)
-        {
-            try{
-                kids[i].join();
-            }
-            catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
+            kids[i].start();
         }
         try{
             Thread.sleep(toChristmasTime);
@@ -40,8 +30,18 @@ public class Christmas {
         synchronized (workshop) {
             workshop.setChristmasTime();
         }
-        System.out.println("Number of gifts to craft: " + workshop.getWishCounter());
-        System.out.println("Number of gifts crafted:" + workshop.getStorage().size());
+        for(int i = 0; i < getNumberOfKids(); i++)
+        {
+            try{
+                kids[i].join();
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        //System.out.println("Number of gifts to craft: " + workshop.getWishCounter());
+        //System.out.println("Number of gifts crafted: " + workshop.getStorage().size());
     }
 
     public int getNumberOfKids() {
