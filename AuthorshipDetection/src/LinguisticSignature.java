@@ -1,0 +1,18 @@
+package bg.sofia.uni.fmi.mjt.authorship.detection;
+
+import java.util.Map;
+
+public class LinguisticSignature {
+    private Map<FeatureType, Double> features;
+    public LinguisticSignature(Map<FeatureType, Double> features) {
+        this.features = features;
+    }
+    public Map<FeatureType, Double> getFeatures() {
+        return this.features;
+
+    }
+    public static String cleanUp(String word) {
+        return word.toLowerCase()
+                .replaceAll( "^[!.,:;\\-?<>#\\*\'\"\\[\\(\\]\\)\\n\\t\\\\]+|[!.,:;\\-?<>#\\*\'\"\\[\\(\\]\\)\\n\\t\\\\]+$", "");
+    }
+}
